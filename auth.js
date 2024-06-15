@@ -32,7 +32,6 @@ export const { handlers: {GET, POST}, auth, signIn, signOut } = NextAuth({
                      credentials.password,
                      user.password
                   )
-                  user?.password === credentials.password
                   // console.log(isMatch);
                   if(isMatch) {
                      return user;

@@ -1,17 +1,22 @@
 import { isDateBetween, replaceMongoIdInArray, replaceMongoIdInObject } from "@/_utils/data-utils";
+
+import { amenityModel } from "../amenity-model";
 import { bookingModel } from "../booking-model";
 import { hotelModel } from "../hotel-model";
 import { ratingModel } from "../rating-model";
 import { reviewModel } from "../review-model";
 import { userModel } from "../user-model";
-import { amenityModel } from "../amenity-model";
 
 export async function getAllHotels(destination, checkin, checkout, category, amenities) {
    const regex = new RegExp(destination, "i");
 
-   const hotelsByDestination = await hotelModel.find({city: {$regex: regex}}).select(["name", "city", "highRate", "lowRate", "propertyCategory", "thumbNailUrl", "amenities" ]).lean();
+   const hotelsByDestination = await hotelModel.find({city: {$regex: regex}}).select(["name", "city", "highRate", "lowRate", "propertyCategory", "thumbNailUrl", "amenities" ]).populate({
+      path: "amenities",
+      model: amenityModel
+   }).lean();
 
    let allHotels = hotelsByDestination;
+   // console.log('hotel', allHotels);
 
    if(checkin && checkout) {
       allHotels = await Promise.all(
@@ -41,23 +46,14 @@ export async function getAllHotels(destination, checkin, checkout, category, ame
    // amenities array string variable
    if(amenities) {
       // console.log(amenities);
-      allHotels = await Promise.all(
-         allHotels?.filter(hotel => {
+      allHotels = allHotels?.filter(hotel => {
          // console.log(hotel);
-         const ameHotel=  hotel.amenities?.map( async(id) => {
-            const amenity = await amenityModel.find({_id: id}).lean();
-            console.log('hello', amenity[0])
-            if(amenities.includes(amenity[0]?.url)) {
-               console.log('hh')
-               return true;
-            }
+         const ameHotel=  hotel?.amenities?.some(amenity =>{ 
+            return amenities.includes(amenity.slug)
          })
-         console.log(ameHotel);
-
+         // console.log(ameHotel);
          return ameHotel;
-      }))
-
-      console.log('aminity', allHotels);
+         })
    }
 
    return replaceMongoIdInArray(allHotels);

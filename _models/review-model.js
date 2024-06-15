@@ -18,4 +18,4 @@ const reviewSchema = new Schema({
 });
 
 
-export const reviewModel = mongoose.models.reviews ?? mongoose.model("reviews", reviewSchema);
+export const reviewModel = mongoose.models.Review ?? mongoose.model("Review", reviewSchema);

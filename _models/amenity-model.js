@@ -24,4 +24,4 @@ const amenitySchema = new Schema({
 });
 
 
-export const amenityModel = mongoose.models.amenity ?? mongoose.model("amenity", amenitySchema);
+export const amenityModel = mongoose.models.Amenity ?? mongoose.model("Amenity", amenitySchema);

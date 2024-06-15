@@ -1,4 +1,5 @@
 import mongoose, { Schema } from 'mongoose'
+import { amenityModel } from './amenity-model';
 
 const hotelSchema = new Schema({
    name: {
@@ -54,9 +55,9 @@ const hotelSchema = new Schema({
       type: String
     },
     amenities: {
-      required: false,
-      type: Array
+      type: [Schema.ObjectId],
+      ref: "Amenity"
     }
 })
 
-export const hotelModel = mongoose.models.hotels ?? mongoose.model("hotels", hotelSchema);
+export const hotelModel = mongoose.models.Hotel ?? mongoose.model("Hotel", hotelSchema);
