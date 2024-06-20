@@ -12,7 +12,7 @@ const refineCategory = (category) => {
 }
 
 
-const HotelListPage = async({searchParams: {destination, checkin, checkout, category, amenities}}) => {
+const HotelListPage = async({searchParams: {destination, checkin, checkout, category, amenities, sortBy}}) => {
 
     // console.log(amenities);
 
@@ -26,7 +26,7 @@ const HotelListPage = async({searchParams: {destination, checkin, checkout, cate
             <section className="py-12">
                 <div className="container grid grid-cols-12">
                     <Filter />
-                    <HotelList category={refineCategory(category)} destination={destination} checkin={checkin} checkout={checkout} amenities={refineCategory(amenities)} />
+                    <HotelList category={refineCategory(category)} destination={destination} checkin={checkin} checkout={checkout} amenities={refineCategory(amenities)} sortBy={sortBy} />
                 </div>
             </section>
         </>

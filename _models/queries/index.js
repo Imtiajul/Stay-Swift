@@ -7,7 +7,7 @@ import { ratingModel } from "../rating-model";
 import { reviewModel } from "../review-model";
 import { userModel } from "../user-model";
 
-export async function getAllHotels(destination, checkin, checkout, category, amenities) {
+export async function getAllHotels(destination, checkin, checkout, category, amenities, sortBy) {
    const regex = new RegExp(destination, "i");
 
    const hotelsByDestination = await hotelModel.find({city: {$regex: regex}}).select(["name", "city", "highRate", "lowRate", "propertyCategory", "thumbNailUrl", "amenities" ]).populate({
@@ -55,6 +55,26 @@ export async function getAllHotels(destination, checkin, checkout, category, ame
          return ameHotel;
          })
    }
+
+   if(sortBy) {
+      if(sortBy === 'highToLow' ) {
+         allHotels.sort((a, b) => {
+      
+            const aPrice = a.highRate + a.lowRate;
+            const bPrice = b.highRate + b.lowRate; 
+            if(bPrice < aPrice) { return -1; }   
+         });
+      }
+         else if(sortBy === 'lowToHigh') {
+         allHotels.sort((a, b) => {
+      
+            const aPrice = a.highRate + a.lowRate;
+            const bPrice = b.highRate + b.lowRate; 
+            if(aPrice < bPrice) { return -1; }
+         })
+      }
+   }
+
 
    return replaceMongoIdInArray(allHotels);
 }

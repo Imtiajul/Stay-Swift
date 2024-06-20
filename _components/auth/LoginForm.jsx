@@ -17,7 +17,7 @@ const LoginForm = () => {
 
       const response = await login(formdata)
 
-      console.log(response);
+      // console.log(response);
 
       if (!!response.error) {
         setError(response.error)
@@ -25,7 +25,7 @@ const LoginForm = () => {
         router.push("/bookings")
       }
     } catch (e) {
-      console.log(e.message)
+      // console.log(e.message)
       setError(e.message)
     }
   }

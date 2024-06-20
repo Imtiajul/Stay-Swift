@@ -3,7 +3,7 @@ import HotelRating from "./HotelRating"
 import HotelReviewNumber from "./HotelReviewNumber"
 
 const HotelSummaryInfo = ({ fromListPage, hotelInfo, checkin, checkout }) => {
-  console.log(hotelInfo)
+  // console.log(hotelInfo/)
   let params = ""
 
   if (checkin && checkout) {

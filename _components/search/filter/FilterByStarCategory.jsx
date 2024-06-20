@@ -48,7 +48,7 @@ const FilterByStarCategory = () => {
     replace(`${pathName}?${params.toString()}`)
   }, [query])
 
-  console.log(query)
+  // console.log(query)
 
   return (
     <div>
