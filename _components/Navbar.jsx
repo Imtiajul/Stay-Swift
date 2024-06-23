@@ -23,6 +23,9 @@ const Navbar = async ({ headerMenu }) => {
             <li>
               <Link href="#">Recommended Places</Link>
             </li>
+            <li>
+              <Link href="/hotels">Hotels</Link>
+            </li>
           </>
         )}
         <li>
